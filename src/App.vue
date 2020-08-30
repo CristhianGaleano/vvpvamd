@@ -4,7 +4,7 @@
 
       <div class="d-flex align-center">
         <v-toolbar-title class="headline monster-font">
-          Ventanilla Académica
+          Ventanilla de la Vicerrectoría de Proyecto de Vida
         </v-toolbar-title>
       </div>
         <v-chip class="ml-3" color="secondary">

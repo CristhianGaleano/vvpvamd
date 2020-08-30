@@ -65,7 +65,7 @@ export default {
                 // get iud del user
                  let uid = auth.currentUser.uid 
                 //  acces for document on BD
-                let doc = await db.collection('usuariosvaca')
+                let doc = await db.collection('usuariosvvpv')
                                 .doc(uid)
                                 .get()
                 if(doc.exists){
