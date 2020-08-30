@@ -33,7 +33,17 @@ export default {
             password: ''
         }
     },
+    
     methods: {
+        executeLogout () {
+            auth.signOut()
+                .then(function (){
+                    console.log("logout succesful");
+                })
+                .catch(function (error){
+                    console.log(error);
+                })
+        },
        async ingresar () {
 
            if(!this.email){
@@ -55,7 +65,7 @@ export default {
                 // get iud del user
                  let uid = auth.currentUser.uid 
                 //  acces for document on BD
-                let doc = await db.collection('usuarios')
+                let doc = await db.collection('usuariosvaca')
                                 .doc(uid)
                                 .get()
                 if(doc.exists){
@@ -72,7 +82,7 @@ export default {
                     this.enviarNotificacion('Usuario no válido. Revisa tu correo y contraseña', 'Warning')
                     break
                 default: 
-                    this.enviarNotificacion('Ocurrió unxxx error verificando la información', 'Error ')
+                    this.enviarNotificacion('Ocurrió un error verificando la información', 'Error ')
             }
         }           
             },

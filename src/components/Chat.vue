@@ -4,7 +4,7 @@
             <v-card>
                 <v-toolbar color="primary"  dark dense>
                     <v-toolbar-title>
-                        Asesores
+                        Usuarios
                     </v-toolbar-title>
                 </v-toolbar>
                 <v-list two-line class="pa-0 ma-0 scroll-y overflow-y-auto" id="scroll-target" style="max-height: 640px">
@@ -84,73 +84,7 @@
 
          <v-flex xs12 sm12 md3 lg4>
         <!-- end interes contacts -->
-         <v-card>
-                <v-toolbar color="primary"  dark dense>
-                    <v-toolbar-title>
-                        Contactos de interés
-                    </v-toolbar-title>
-                </v-toolbar>
-                <v-list two-line class="pa-0 ma-0  overflow-y-auto" id="scroll-target" style="max-height: 640px">
-                    
-                    <v-expansion-panels hover accordion>
-                        <v-expansion-panel >
-                        <v-expansion-panel-header  style="background: #079d5b69 none repeat scroll 0% 0%;
-color: white;">F. de Arquitectura y Diseño</v-expansion-panel-header>
-                        <v-expansion-panel-content>
-                            Sheyen Muñoz - <a href="https://api.whatsapp.com/send?phone=573217094635"  target="_blank" title="Escríbenos"><span class="group pa-2">
-        <v-icon>fab fa-whatsapp</v-icon>
-      </span>3217094635</a>
-                            
-                        </v-expansion-panel-content>
-                        </v-expansion-panel>
-                    </v-expansion-panels>
-                    <v-expansion-panels hover accordion>
-                        <v-expansion-panel >
-                        <v-expansion-panel-header style="background: #079d5b69 none repeat scroll 0% 0%;
-color: white;">F. de Ciencias Básicas e Ingeniería</v-expansion-panel-header>
-                        <v-expansion-panel-content>
-                            Alexander Ramirez - <a href="https://api.whatsapp.com/send?phone=573138019791"  target="_blank" title="Escríbenos"><span class="group pa-2"><v-icon>fab fa-whatsapp</v-icon></span>3138019791</a>
-                        </v-expansion-panel-content>
-                        </v-expansion-panel>
-                    </v-expansion-panels>
-                    <v-expansion-panels hover accordion>
-                        <v-expansion-panel >
-                        <v-expansion-panel-header style="background: #079d5b69 none repeat scroll 0% 0%;
-color: white;">F. de Ciencias Económicas y Administrativas</v-expansion-panel-header>
-                        <v-expansion-panel-content>
-                            Francy Molano - <a href="https://api.whatsapp.com/send?phone=573046591874"  target="_blank" title="Escríbenos"><span class="group pa-2"><v-icon>fab fa-whatsapp</v-icon></span>3046591874</a>
-                        </v-expansion-panel-content>
-                        </v-expansion-panel>
-                    </v-expansion-panels>
-                    <v-expansion-panels hover accordion>
-                        <v-expansion-panel >
-                        <v-expansion-panel-header style="background: #079d5b69 none repeat scroll 0% 0%;
-color: white;">F. de Ciencias Humanas, Sociales y de la Educación</v-expansion-panel-header>
-                        <v-expansion-panel-content>
-                            Juana Gallego - <a href="https://api.whatsapp.com/send?phone=573137912319"  target="_blank" title="Escríbenos"><span class="group pa-2"><v-icon>fab fa-whatsapp</v-icon></span>3046591874</a>
-                        </v-expansion-panel-content>
-                        </v-expansion-panel>
-                    </v-expansion-panels>
-                    <v-expansion-panels hover accordion>
-                        <v-expansion-panel >
-                        <v-expansion-panel-header style="background: #079d5b69 none repeat scroll 0% 0%;
-color: white;">Recepción</v-expansion-panel-header>
-                        <v-expansion-panel-content>
-                            Danis Mosquera - Recepción
-                        </v-expansion-panel-content>
-                        </v-expansion-panel>
-                    </v-expansion-panels>
-                    <v-expansion-panels hover accordion>
-                        <v-expansion-panel >
-                        <v-expansion-panel-header style="background: #079d5b69 none repeat scroll 0% 0%;
-color: white;">Financiera</v-expansion-panel-header>
-                        <v-expansion-panel-content>
-                            Pendiente - <a href="https://api.whatsapp.com/send?phone=573137912319"  target="_blank" title="Escríbenos"><span class="group pa-2"><v-icon>fab fa-whatsapp</v-icon></span>3137371184</a>
-                        </v-expansion-panel-content>
-                        </v-expansion-panel>
-                    </v-expansion-panels>
-                </v-list>
-         </v-card>
+        
              
          </v-flex>
     </v-layout>
@@ -203,7 +137,7 @@ export default {
                 this.detenerChat()
             }
 
-            this.detenerChat = db.collection('contactosvvpv')
+            this.detenerChat = db.collection('contactosvaca')
               .doc(this.cid)
               .collection('chat')
               .orderBy('fechaEnvio')
@@ -246,7 +180,7 @@ export default {
             let batch = db.batch()
 
             batch.update(
-                db.collection('contactosvvpv')
+                db.collection('contactosvaca')
                     .doc(this.cid)
                     .collection('chat')
                     // id aleatorio
@@ -256,7 +190,7 @@ export default {
 
             //  se elimina pero lo hace al recibir msj, y el escuchador resta unidad
             batch.delete(
-                db.collection('usuariosvvpv')
+                db.collection('usuariosvaca')
                     .doc(this.usuario.uid)
                     .collection('chat-sin-leer')
                     .doc(mensaje.mid)
@@ -269,7 +203,7 @@ export default {
         async consultarUsuarios () {
             try {
                 // Accede a la colección 'usuarios'
-                let docs = await db.collection('usuariosvvpv')
+                let docs = await db.collection('usuariosvaca')
                                     .get()
                 // Como vamos a obtener todos los documentos entonces get()
                 // recorriendo cada documento
@@ -277,7 +211,7 @@ export default {
                     let usuario = doc.data()
                     // add user record to end
                     
-                    if(usuario.uid !== this.usuario.uid && usuario.rol != 'user'){
+                    if(usuario.uid !== this.usuario.uid && usuario.rol == 'user'){
                     // if(usuario.uid !== this.usuario.uid && usuario.rol != 'user'){
                         // add two properties
                         console.log('adicionando properties cant text')
@@ -296,7 +230,7 @@ export default {
         // aqui lee los mensages sin leer y lo suma
         consultarChatSinLeer () {
             // user current
-            db.collection('usuariosvvpv')
+            db.collection('usuariosvaca')
                 .doc(this.usuario.uid)
                 .collection('chat-sin-leer')
                 .orderBy('fechaEnvio')
@@ -347,14 +281,14 @@ export default {
                 // await para garantizar que la consulta termine antes de preguntar si el usuario existe
                 // Accede a la colección 'contactos
                 // obtiene el documento con el id en 'cid'
-                let doc = await db.collection('contactosvvpv')
+                let doc = await db.collection('contactosvaca')
                             .doc(this.cid)
                             .get()
 
                 if(!doc.exists){
                 // si no existe entonces crea el documento
                     // creacion el documento 
-                    await db.collection('contactosvvpv')
+                    await db.collection('contactosvaca')
                             .doc(this.cid)
                             .set({cid: this.cid})
                 }
@@ -388,7 +322,7 @@ export default {
             let batch = db.batch()
             // la lista del chat
             batch.set(
-                db.collection('contactosvvpv')
+                db.collection('contactosvaca')
                         .doc(this.cid)
                         .collection('chat')
                         .doc(mid),
@@ -397,7 +331,7 @@ export default {
 
             // lista general
             batch.set(
-                db.collection('usuariosvvpv')
+                db.collection('usuariosvaca')
                         .doc(this.usuarioSeleccionado.uid)
                         .collection('chat-sin-leer')
                         .doc(mid),

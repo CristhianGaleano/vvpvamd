@@ -31,8 +31,8 @@ var firebaseConfig = {
   // instancias pra aut y bd
   const auth = firebase.auth()
   const db = firebase.firestore()
-  const provider = new firebase.auth.GoogleAuthProvider()
+  // const provider = new firebase.auth.GoogleAuthProvider()
   const storage = firebase.storage()
 
   // exportando para poderlas utilizar en los componentes
-  export { auth, db, provider, storage }
+  export { auth, db, storage }
