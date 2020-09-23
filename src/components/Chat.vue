@@ -107,7 +107,8 @@ export default {
             enviandoMensaje: false,
             cid: null,
             detenerChat: null,
-            height: 0
+            height: 0,
+            audio:  new Audio('http://soundbible.com/mp3/Air Plane Ding-SoundBible.com-496729130.mp3')
         }
     },
     computed: {
@@ -200,26 +201,43 @@ export default {
             batch.commit()
         },
         
+       // Lee los usuarios, estos seran mostrados en el panel left
         async consultarUsuarios () {
             try {
-                // Accede a la colección 'usuarios'
-                let docs = await db.collection('usuariosvvpv')
-                                    .get()
-                // Como vamos a obtener todos los documentos entonces get()
-                // recorriendo cada documento
-                docs.forEach(doc => {
-                    let usuario = doc.data()
-                    // add user record to end
-                    
-                    if(usuario.uid !== this.usuario.uid && usuario.rol == 'user'){
-                    // if(usuario.uid !== this.usuario.uid && usuario.rol != 'user'){
-                        // add two properties
-                        console.log('adicionando properties cant text')
-                        usuario.cantidadMensajes = 0
-                        usuario.ultimoMensaje = ''
-                        this.usuarios.push(usuario)
-                    }
+                // recuperar cada usuario y adicionarle las propiedades, no sin antes dejar la collecion a la escucha de eventos
+                db.collection('usuariosvvpv')
+                .onSnapshot( snapshot => {
+                    snapshot.docChanges().forEach( change => {
+
+                        let usuario = change.doc.data()
+
+                        if (usuario.uid !== this.usuario.uid && usuario.rol == 'user') {
+                             console.log('adicionando properties cant text')
+                            usuario.cantidadMensajes = 0
+                            usuario.ultimoMensaje = ''
+                            this.usuarios.unshift(usuario)
+                        }
+                    } )
                 })
+                
+                // // Accede a la colección 'usuarios'
+                // let docs = await db.collection('usuariosvaca')
+                //                     .get()
+                // // Como vamos a obtener todos los documentos entonces get()
+                // // recorriendo cada documento
+                // docs.forEach(doc => {
+                //     let usuario = doc.data()
+                //     // add user record to end
+                    
+                //     if(usuario.uid !== this.usuario.uid && usuario.rol == 'user'){
+                //     // if(usuario.uid !== this.usuario.uid && usuario.rol != 'user'){
+                //         // add two properties
+                //         console.log('adicionando properties cant text')
+                //         usuario.cantidadMensajes = 0
+                //         usuario.ultimoMensaje = ''
+                //         this.usuarios.push(usuario)
+                //     }
+                // })
                 // para leer y mostrar contador
                 this.consultarChatSinLeer()
             } catch (error) {
@@ -249,6 +267,7 @@ export default {
                              case 'added':
                                 usuario.cantidadMensajes++
                                 usuario.ultimoMensaje = mensaje.texto
+                                this.audio.play();
                              break
 
                              case 'removed':
