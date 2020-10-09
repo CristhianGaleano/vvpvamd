@@ -95,6 +95,7 @@
 
 import { db } from '@/firebase'
 import uuidv4 from 'uuid/v4'
+import Push  from 'push.js';
 
 export default {
     props: ['usuario'],
@@ -268,7 +269,17 @@ export default {
                              case 'added':
                                 usuario.cantidadMensajes++
                                 usuario.ultimoMensaje = mensaje.texto
-                                this.audio.play();
+                                  try {
+                                    this.audio.play();
+                                    
+                                } catch (error) {
+                                    console.log(error)
+                                }
+                                 Push.create('Tienes un nuevo mensaje por leer', {
+                                    body: 'Desde Ventanilla de Proyecto de Vida',
+                                    icon: 'https://www.ucp.edu.co/portal/wp-content/uploads/2020/10/logo-vigi-black.png',
+                                    timeout: 32000
+                                })
                              break
 
                              case 'removed':
