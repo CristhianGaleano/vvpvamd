@@ -108,7 +108,7 @@ export default {
             cid: null,
             detenerChat: null,
             height: 0,
-            audio:  new Audio('http://soundbible.com/mp3/Air Plane Ding-SoundBible.com-496729130.mp3')
+            audio:  new Audio('https://www.ucp.edu.co/portal/wp-content/uploads/2020/10/new-msj.mp3')
         }
     },
     computed: {
